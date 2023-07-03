@@ -10,7 +10,6 @@ module.exports = merge(common, {
 
   // Spin up a server for quick development
   devServer: {
-    port: 9001,
     historyApiFallback: true,
     open: true,
     compress: true
