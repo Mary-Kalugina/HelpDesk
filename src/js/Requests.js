@@ -8,15 +8,12 @@ export default class Requests {
 
   getAllTickets() {
     try {
-      const response = fetch(
-        "http://localhost:7070/tickets?method=allTickets",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = fetch("http://localhost:7070/?method=allTickets", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const data = JSON.parse(response.json());
       render.setTickets(data);
@@ -48,20 +45,20 @@ export default class Requests {
   }
 
   createTicket(e) {
-    const data = new FormData();
     let modal = e.target.closest(".widget_container");
     let name = modal.querySelector(".ticketName");
     let discription = modal.querySelector(".discription");
     let created = this.time();
-
-    data.append("id", null);
-    data.append("name", name);
-    data.append("status", false);
-    data.append("discription", discription);
-    data.append("created", created);
+    const data = JSON.stringify({
+      id: null,
+      name: name,
+      status: false,
+      discription: discription,
+      created: created,
+    });
 
     try {
-      const response = fetch(`http://localhost:7070/?method=createTicket`, {
+      fetch(`http://localhost:7070/?method=createTicket`, {
         method: "POST",
         body: data,
       });
@@ -72,22 +69,22 @@ export default class Requests {
   }
 
   updateTicket(e) {
-    const data = new FormData();
     let modal = e.target.closest(".widget_container");
     let id = modal.id;
     let name = modal.querySelector(".ticketName");
     let discription = modal.querySelector(".discription");
     let created = this.time();
     let status = modal.data.status;
-
-    data.append("id", id);
-    data.append("name", name);
-    data.append("status", status);
-    data.append("discription", discription);
-    data.append("created", created);
+    const data = JSON.stringify({
+      id: id,
+      name: name,
+      status: status,
+      discription: discription,
+      created: created,
+    });
 
     try {
-      const response = fetch(`http://localhost:7070/?method=createTicket`, {
+      fetch(`http://localhost:7070/?method=createTicket`, {
         method: "POST",
         body: data,
       });
@@ -100,15 +97,12 @@ export default class Requests {
   deleteTicket() {
     let id = this.editProduct.id;
     try {
-      const response = fetch(
-        `http://localhost:7070/?method=deleteById&id=<${id}>`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      fetch(`http://localhost:7070/?method=deleteById&id=<${id}>`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       this.getAllTickets();
       this.editProduct = null;
     } catch (e) {

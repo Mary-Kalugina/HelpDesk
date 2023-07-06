@@ -1,6 +1,7 @@
 export default class Render {
   setTickets(data) {
     let html = "";
+
     for (let ticket in data) {
       html += `<div class="ticket" id="${ticket.id} data-status="${ticket.status}"> 
       <div class="wrapper">
@@ -18,7 +19,9 @@ export default class Render {
       <div class="discription hidden"></div>
     </div>`;
     }
-    document.querySelector(".tickets_container").append(html);
+    document
+      .querySelector(".tickets_container")
+      .insertAdjacentHTML("afterBegin", html);
   }
 
   discriptionShow(id, discription) {
