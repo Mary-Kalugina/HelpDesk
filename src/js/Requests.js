@@ -58,6 +58,7 @@ export default class Requests {
 
     const xhr = new XMLHttpRequest();
     xhr.open("POST", this.url + "?method=createTicket");
+    xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
       if (xhr.readyState !== 4) return;
       if (xhr.status == 200) {
@@ -88,6 +89,7 @@ export default class Requests {
 
     const xhr = new XMLHttpRequest();
     xhr.open("POST", this.url + `?method=updateById&id=<${id}>`);
+    xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
       if (xhr.readyState !== 4) return;
       if (xhr.status == 200) {
