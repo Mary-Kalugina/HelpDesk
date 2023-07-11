@@ -1,47 +1,46 @@
 import Render from "./Render";
-const render = new Render();
 
 export default class Requests {
   constructor() {
     this.editProduct = null;
+    this.render = new Render();
+    this.url = "http://localhost:7070/";
   }
 
   getAllTickets() {
-    try {
-      const response = fetch("http://localhost:7070/?method=allTickets", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = JSON.parse(response.json());
-      render.setTickets(data);
-    } catch (e) {
-      console.error(e);
-    }
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", this.url + "?method=allTickets");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState !== 4) return;
+      if (xhr.status == 200) {
+        try {
+          const data = JSON.parse(xhr.response);
+          this.render.setTickets(data);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    };
+    xhr.send();
   }
 
   getDiscription(e) {
     let ticket = e.target.closest(".ticket");
     let id = ticket.dataset.id;
-
-    try {
-      const response = fetch(
-        `http://localhost:7070/?method=ticketById&id=<${id}>`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", this.url + `?method=ticketById&id=<${id}>`);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState !== 4) return;
+      if (xhr.status == 200) {
+        try {
+          const data = JSON.parse(xhr.response);
+          this.render.discriptionShow(id, data);
+        } catch (e) {
+          console.error(e);
         }
-      );
-
-      const data = JSON.parse(response.json());
-      render.discriptionShow(id, data);
-    } catch (e) {
-      console.error(e);
-    }
+      }
+    };
+    xhr.send();
   }
 
   createTicket(e) {
@@ -57,15 +56,19 @@ export default class Requests {
       created: created,
     });
 
-    try {
-      fetch(`http://localhost:7070/?method=createTicket`, {
-        method: "POST",
-        body: data,
-      });
-      this.getAllTickets();
-    } catch (e) {
-      console.error(e);
-    }
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", this.url + "?method=createTicket");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState !== 4) return;
+      if (xhr.status == 200) {
+        try {
+          this.getAllTickets();
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    };
+    xhr.send(data);
   }
 
   updateTicket(e) {
@@ -83,31 +86,37 @@ export default class Requests {
       created: created,
     });
 
-    try {
-      fetch(`http://localhost:7070/?method=createTicket`, {
-        method: "POST",
-        body: data,
-      });
-      this.getAllTickets();
-    } catch (e) {
-      console.error(e);
-    }
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", this.url + `?method=updateById&id=<${id}>`);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState !== 4) return;
+      if (xhr.status == 200) {
+        try {
+          this.getAllTickets();
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    };
+    xhr.send(data);
   }
 
   deleteTicket() {
     let id = this.editProduct.id;
-    try {
-      fetch(`http://localhost:7070/?method=deleteById&id=<${id}>`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      this.getAllTickets();
-      this.editProduct = null;
-    } catch (e) {
-      console.error(e);
-    }
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", this.url + `?method=deleteById&id=<${id}>`);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState !== 4) return;
+      if (xhr.status == 200) {
+        try {
+          this.getAllTickets();
+          this.editProduct = null;
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    };
+    xhr.send();
   }
 
   setEditProduct(e) {
