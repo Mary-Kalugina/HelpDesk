@@ -2,10 +2,14 @@ export default class Render {
   setTickets(data) {
     let html = "";
 
-    for (let ticket in data) {
+    data.forEach((ticket) => {
+      let isChecked = "";
+      if (ticket.status) {
+        isChecked = "checked";
+      }
       html += `<div class="ticket" id="${ticket.id} data-status="${ticket.status}"> 
       <div class="wrapper">
-      <input type="checkbox" class="custom-checkbox" id="checkbox">
+      <input type="checkbox" class="custom-checkbox" id="checkbox" ${isChecked}>
       <label for="checkbox"></label>
     <div class="ticket_body">
       <div class="ticketName">${ticket.name}</div>
@@ -18,7 +22,7 @@ export default class Render {
       </div>
       <div class="discription hidden"></div>
     </div>`;
-    }
+    });
     document
       .querySelector(".tickets_container")
       .insertAdjacentHTML("afterBegin", html);

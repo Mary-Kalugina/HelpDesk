@@ -15,7 +15,7 @@ export default class Requests {
       if (xhr.status == 200) {
         try {
           const data = JSON.parse(xhr.response);
-          this.render.setTickets(data);
+          this.render.setTickets(data).bind(this);
         } catch (e) {
           console.error(e);
         }

@@ -1,5 +1,5 @@
-import EventController from "./js/EventController";
-import Requests from "./js/Requests";
+import EventController from "./EventController";
+import Requests from "./Requests";
 const eventController = new EventController();
 const requests = new Requests();
 
