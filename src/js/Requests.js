@@ -5,10 +5,10 @@ export default class Requests {
   constructor() {
     this.editProduct = null;
     this.render = new Render();
-    this.url = "https://helpdesk-yzo5.onrender.com/";
+    this.url = "http://localhost:7070/";
     this.widgetControl = new WidgetControl();
   }
-  // http://localhost:7070/
+  // https://helpdesk-yzo5.onrender.com/
   getAllTickets() {
     const xhr = new XMLHttpRequest();
     xhr.open("GET", this.url + "?method=allTickets");
