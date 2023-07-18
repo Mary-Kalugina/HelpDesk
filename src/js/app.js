@@ -4,8 +4,7 @@ const eventController = new EventController();
 const requests = new Requests();
 
 document.addEventListener("click", (e) => {
-  e.preventDefault();
-  if (e.target.classList.contains("button")) {
+  if (e.target.closest(".click")) {
     eventController.checkButton(e);
   }
 });

@@ -12,11 +12,11 @@ export default class WidgetControl {
     </label>
     <label>
     Описание
-      <input class="placeholder discription">
+      <input class="placeholder description">
     </label>
     <div class="widget_btns">
-      <button type="submit" class="widget_btn save_widget button">Сохранить</button>
-      <button type="button" class="widget_btn close_widget button">Отмена</button>
+      <button type="button" class="widget_btn save_widget button click">Сохранить</button>
+      <button type="button" class="widget_btn close_widget button click">Отмена</button>
     </div>
     </form>
     </div>`;
@@ -29,11 +29,12 @@ export default class WidgetControl {
     document.querySelector(".widget_container").remove();
   }
 
-  editWidgetOpen(e) {
+  editWidgetOpen(e, description) {
     let ticket = e.target.closest(".ticket");
     const name = ticket.querySelector(".ticketName").textContent;
-    const discription = ticket.querySelector(".discription").textContent;
-    const html = `<div class="widget_container">
+    const status = ticket.dataset.status;
+    const id = ticket.id;
+    const html = `<div class="widget_container" data-status="${status}" data-id="${id}">
     <div class="widgetHeader">Изменить тикет</div>
         <form class="widget_form">
         <label>
@@ -42,11 +43,11 @@ export default class WidgetControl {
         </label>
         <label>
           Описание
-          <input class="placeholder discription" value="${discription}">
+          <input class="placeholder description" value="${description}">
         </label>
         <div class="widget_btns">
-        <button type="submit" class="widget_btn edit_widget button">Сохранить</button>
-        <button type="button" class="widget_btn close_widget button">Отмена</button>
+        <button type="button" class="widget_btn edit_widget button click">Сохранить</button>
+        <button type="button" class="widget_btn close_widget button click">Отмена</button>
       </div>
         </form>
         </div>`;
@@ -60,8 +61,8 @@ export default class WidgetControl {
        <div class="widgetHeader">Удалить тикет</div>
        <p>Вы уверены, что хотите удалить тикет? Это действоие необратимо</p>
        <div class = "widget_btns">
-        <button type="button" class="widget_btn close_widget button">Отмена</button>
-        <button type="submit" class="widget_btn delete_ticket button">OK</button>
+        <button type="button" class="widget_btn close_widget button click">Отмена</button>
+        <button type="button" class="widget_btn delete_ticket button click">OK</button>
       </div>
     </div>`;
     const div = document.createElement("div");
